@@ -7,6 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
+/**
+ * wms发货单job
+ */
 @Slf4j
 public class ArriveorderJob extends BaseAutoPluginWork implements BaseJob {
     @Override
