@@ -27,4 +27,5 @@ public class RestEntity {
     private String caliberjson;
     private String arriveorderjson;
     private String deliveryjson;
+    private String beginmateialjson;
 }

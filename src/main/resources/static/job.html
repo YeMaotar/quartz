@@ -36,7 +36,7 @@
       <el-table-column prop="cronExpression" label="表达式" align="center"></el-table-column>
       <el-table-column prop="timeZoneId" label="时区" align="center"></el-table-column>
       <el-table-column prop="triggerState" label="状态" align="center" :formatter="formatState"></el-table-column>
-      <el-table-column label="操作" width="300" align="center">
+      <el-table-column label="操作" width="400" align="center">
         <template scope="scope">
           <el-button size="small" type="warning" @click="handlePause(scope.$index, scope.row)">
             暂停
@@ -50,6 +50,10 @@
           <el-button size="small" type="success" @click="handleUpdate(scope.$index, scope.row)">
             修改
           </el-button>
+
+         <el-button size="small" type="success" @click="handDo(scope.$index,scope.row)">
+             立即执行
+         </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -217,6 +221,7 @@
          }, function () {
            console.log('failed');
          });
+
        },
        // 更新
        handleUpdate: function (index, row) {
@@ -250,7 +255,20 @@
        handleCurrentChange: function (val) {
          this.currentPage = val;
          this.loadData(this.currentPage, this.pagesize);
-       }
+       },
+         //立即执行
+         handDo: function (index, row){
+             this.$http.put('job?do', {
+                 "jobClassName": row.jobName,
+                 "jobGroupName": row.jobGroup
+             }, {emulateJSON: true}).then(function (res) {
+                 alert(row.jobGroup+"立即执行成功");
+                 this.loadData(this.currentPage, this.pagesize);
+             }, function () {
+                 console.log(row.jobGroup+'立即执行失败');
+             });
+         }
+
      }
    });
 

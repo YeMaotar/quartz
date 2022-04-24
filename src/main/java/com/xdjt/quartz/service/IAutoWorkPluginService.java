@@ -26,4 +26,6 @@ public interface IAutoWorkPluginService{
     public String WmsArriveorderService();
 
     public String WmsDeliveryService();
+
+    public String NCBeginMaterial();
 }

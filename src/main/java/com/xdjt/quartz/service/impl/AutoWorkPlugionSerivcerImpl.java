@@ -112,4 +112,13 @@ public class AutoWorkPlugionSerivcerImpl implements IAutoWorkPluginService {
     public String WmsDeliveryService() {
         return getPrintln(rest.getDeliveryjson());
     }
+
+    /**
+     * NC物料期初
+     * @return
+     */
+    @Override
+    public String NCBeginMaterial() {
+        return getPrintln(rest.getBeginmateialjson());
+    }
 }

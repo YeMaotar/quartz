@@ -7,6 +7,7 @@ import com.github.pagehelper.PageInfo;
 import com.xdjt.quartz.common.ApiResponse;
 import com.xdjt.quartz.entity.JobAndTrigger;
 import com.xdjt.quartz.entity.JobForm;
+import com.xdjt.quartz.service.IAutoWorkPluginService;
 import com.xdjt.quartz.service.JobService;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.SchedulerException;
@@ -31,6 +32,9 @@ import javax.validation.Valid;
 public class JobController {
     @Resource
     private JobService jobService;
+
+    @Resource
+    private IAutoWorkPluginService workservice;
 
     /**
      * 保存定时任务
@@ -110,5 +114,42 @@ public class JobController {
         PageInfo<JobAndTrigger> all = jobService.list(currentPage, pageSize);
         return ResponseEntity.ok(ApiResponse.ok(Dict.create().set("total", all.getTotal()).set("data", all.getList())));
     }
+
+    @PutMapping(params = "do")
+    public ResponseEntity<ApiResponse> DoJob(@Valid JobForm form){
+        String jobClassName = form.getJobClassName();
+        String message;
+        if("com.xdjt.quartz.job.mes.MesBomJob".equals(jobClassName)){
+            message= workservice.BomService();
+        }else if("com.xdjt.quartz.job.nc.BeginMaterialJob".equals(jobClassName)){
+            message= workservice.NCBeginMaterial();
+        }else if("com.xdjt.quartz.job.wms.ArriveorderJob".equals(jobClassName)){
+            message= workservice.WmsArriveorderService();
+        }else if("com.xdjt.quartz.job.wms.CaliberJob".equals(jobClassName)){
+            message=workservice.WmsCaliberService();
+        }else if("com.xdjt.quartz.job.wms.DeliveryJob".equals(jobClassName)){
+            message= workservice.WmsDeliveryService();
+        }else if("com.xdjt.quartz.job.wms.ExChangUnitJob".equals(jobClassName)){
+            message= workservice.WmsExChangUnitService();
+        }else if("com.xdjt.quartz.job.wms.MaterialClassJob".equals(jobClassName)){
+            message= workservice.WmsMaterialClassService();
+        }else if("com.xdjt.quartz.job.wms.MaterialJob".equals(jobClassName)){
+            message= workservice.WmsMaterialService();
+        }else if("com.xdjt.quartz.job.wms.MaterialPackJob".equals(jobClassName)){
+            message=workservice.WmsMaterialPackService();
+        }else if("com.xdjt.quartz.job.wms.MeasJob".equals(jobClassName)){
+            message=workservice.WmsMeasService();
+        }else if("com.xdjt.quartz.job.wms.OrgJob".equals(jobClassName)){
+            message=workservice.WmsOrgService();
+        }else if("com.xdjt.quartz.job.wms.PsnJob".equals(jobClassName)){
+            message=workservice.WmsPsnService();
+        }else {
+            message ="没有找到该接口";
+        }
+        System.out.println(message);
+        return new ResponseEntity<>(ApiResponse.msg("立即执行成功"), HttpStatus.OK);
+
+    }
+
 
 }
