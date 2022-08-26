@@ -121,4 +121,9 @@ public class AutoWorkPlugionSerivcerImpl implements IAutoWorkPluginService {
     public String NCBeginMaterial() {
         return getPrintln(rest.getBeginmateialjson());
     }
+
+    @Override
+    public String WMSMaterialFrameService() {
+        return getPrintln(rest.getWMSMaterialFramejson());
+    }
 }

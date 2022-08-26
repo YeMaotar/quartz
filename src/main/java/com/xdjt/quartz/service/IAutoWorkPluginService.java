@@ -28,4 +28,6 @@ public interface IAutoWorkPluginService{
     public String WmsDeliveryService();
 
     public String NCBeginMaterial();
+
+    public String WMSMaterialFrameService();
 }
