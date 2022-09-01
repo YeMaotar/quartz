@@ -1,4 +1,4 @@
-package com.xdjt.quartz.job.wms;
+package com.xdjt.quartz.job.mes;
 
 import cn.hutool.core.date.DateUtil;
 import com.xdjt.quartz.job.base.BaseAutoPluginWork;
